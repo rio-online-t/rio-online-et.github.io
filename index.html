@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Radar-Inertial Odometry with Online Spatio-Temporal Calibration via Continuous-Time IMU Modeling">
+  <meta property="og:title" content="LC-RIO-ET"/>
+  <meta property="og:description" content="Radar-Inertial Odometry with Online Spatio-Temporal Calibration via Continuous-Time IMU Modeling"/>
+  <meta property="og:url" content="URL OF THE WEBSITE"/>
+  <meta property="og:image" content="static/images/RAL-2.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+  <meta name="twitter:title" content="LC-RIO-ET">
+  <meta name="twitter:description" content="Radar-Inertial Odometry with Online Spatio-Temporal Calibration via Continuous-Time IMU Modeling">
+  <meta name="twitter:image" content="static/images/RAL-2.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="keywords" content="radar inertial odometry, spatio-temporal calibration, B-splines, IMU, factor graph, SLAM">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>LC-RIO-ET: Radar-Inertial Odometry with Online Spatio-Temporal Calibration</title>
+  <link rel="icon" type="image/x-icon" href="static/images/icon.ico">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+<body>
+
+  <!-- Hero / Title -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Radar-Inertial Odometry with Online Spatio-Temporal Calibration via Continuous-Time IMU Modeling</h1>
+            <!--
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?hl=en&user=B2C61mMAAAAJ" target="_blank" rel="noopener noreferrer">Vlaho-Josip Štironja</a>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?hl=en&user=azYGIbcAAAAJ" target="_blank" rel="noopener noreferrer">Luka Petrović</a>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?hl=en&user=NFH7Sh4AAAAJ" target="_blank" rel="noopener noreferrer">Juraj Peršić</a>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?hl=en&user=TViSHD4AAAAJ" target="_blank" rel="noopener noreferrer">Ivan Marković</a>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?hl=en&user=kU7sMEAAAAAJ" target="_blank" rel="noopener noreferrer">Ivan Petrović</a>
+              </span>
+            </div>
+            -->
+
+            <!--
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">University of Zagreb, Faculty of Electrical Engineering and Computing</span><br>
+              <span class="author-block">Laboratory for Autonomous Systems and Mobile Robotics (LAMOR)</span>
+            </div>
+            -->
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- Paper PDF link -->
+                <span class="link-block">
+                  <a href="#" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+
+                <!-- Github link -->
+                <span class="link-block">
+                  <a href="#" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github"></i></span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                <!-- ArXiv abstract Link -->
+                <span class="link-block">
+                  <a href="#" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="ai ai-arxiv"></i></span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Teaser figure -->
+  <section class="section" style="padding-top: 2px; padding-bottom: 2px;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full_width">
+          <hr style="margin-top: 10px; margin-bottom: 20px;">
+          <div class="columns is-centered" style="margin-bottom: 20px;">
+            <div class="column is-three-quarters" style="padding-left: 20px;">
+              <img src="static/images/RAL-2.png" class="center" style="width: 100%; height: auto;"/>
+              <p style="margin-top: 10px; font-style: italic; color: #555;">Visualization of temporal misalignment between discrete IMU acceleration measurements and the true continuous-time motion, together with a uniform cubic B-spline fit to inertial signals.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Abstract -->
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Radar-Inertial Odometry (RIO) has emerged as a robust alternative to vision-based and lidar-based odometry in challenging conditions such as low light, fog, featureless environments, or in adverse weather.
+              However, many existing RIO approaches assume known radar-IMU extrinsic calibration or rely on sufficient motion excitation for online extrinsic estimation, while temporal misalignment between sensors is often neglected or treated independently.
+              In this work, we present a RIO framework that performs joint online spatial and temporal calibration within a factor-graph optimization formulation, based on continuous-time modeling of inertial measurements using uniform cubic B-splines.
+              The proposed continuous-time representation of acceleration and angular velocity accurately captures the asynchronous nature of radar-IMU measurements, enabling reliable convergence of both temporal offset and extrinsic calibration parameters, without relying on scan matching, target tracking, or environment-specific assumptions.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Methodology -->
+  <section class="section" style="padding-top: 15px; padding-bottom: 5px;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full_width">
+          <hr style="margin-top: 10px">
+          <h2 class="title is-3">Methodology</h2>
+          <section class="hero is-small">
+            <div class="container hero-body">
+              <div class="columns is-centered">
+                <!-- FGO Structure Figure -->
+                <div class="column is-two-thirds-desktop" style="display: flex; flex-direction: column; justify-content: flex-end; align-items: center;">
+                  <img src="static/images/FGO-structure2.png" alt="Factor Graph Structure" style="width: 100%; height: auto;">
+                </div>
+              </div>
+              <div class="columns is-centered">
+                <div class="column is-two-thirds-desktop has-text-centered">
+                  <p>Factor graph architecture: IMU factor (<i>f<sub>IMU</sub></i>), radar ego-velocity factor (<i>f<sub>R</sub></i>), constant time-offset factor (<i>f<sub>CT</sub></i>), and constant extrinsic calibration factor (<i>f<sub>CE</sub></i>).</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <div class="content has-text-justified" style="margin-top: 20px;">
+            <p>
+              The proposed method, dubbed <strong>LC-RIO-ET</strong> (Loosely Coupled Radar-Inertial Odometry with Extrinsic and Temporal Calibration), performs joint online spatial and temporal calibration formulated within a factor graph optimization (FGO) framework.
+              The key contribution is the use of <strong>uniform cubic B-splines</strong> to model inertial signals in continuous time, enabling acceleration and angular velocity estimation at arbitrary timestamps while maintaining C²-continuity.
+              Given discrete IMU measurements within a window centered on the radar timestamp, independent B-splines are fit to the raw acceleration and angular velocity signals.
+              This continuous-time inertial model is directly embedded into the radar ego-velocity factor, allowing the temporal offset and extrinsic calibration parameters to be co-estimated within the same optimization.
+              The system is implemented with GTSAM using iSAM2 within a one-second sliding window, with a two-thread architecture separating optimization and real-time navigation.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Results -->
+  <section class="section" style="padding-top: 10px; padding-bottom: 5px;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full_width">
+          <hr style="margin-top: 10px">
+          <h2 class="title is-3">Results</h2>
+          <br>
+
+          <h3 align="left" class="title is-4">Temporal Offset Convergence</h3>
+          <br>
+          <div class="columns is-centered">
+            <div class="column is-half">
+              <img src="static/images/b1.png" style="width: 100%; height: auto;" class="center"/>
+            </div>
+            <div class="column is-half">
+              <img src="static/images/b2.png" style="width: 100%; height: auto;" class="center"/>
+            </div>
+          </div>
+          <div class="columns is-centered">
+            <div class="column is-half has-text-centered">
+              <p>(a) Temporal offset convergence of LC-RIO-ET under various initial values (0, 25, 50, 75, 100, 125 ms). In all cases the estimate converges robustly to a consistent steady-state of ~113.3 ms.</p>
+            </div>
+            <div class="column is-half has-text-centered">
+              <p>(b) Comparison of temporal offset trajectories for LC-RIO-ET, EKF-RIO-TC, and RIO-T on Sequence 5. All methods converge to a consistent offset, validating the B-spline approach.</p>
+            </div>
+          </div>
+          <div class="content has-text-justified" style="margin-top: 10px;">
+            <p>
+              LC-RIO-ET converges reliably to the temporal offset from all six initializations, demonstrating that the B-spline-based radar factor provides a well-conditioned gradient signal over a wide initialization range.
+              Unlike RIO-T, which relies on locally constant acceleration and requires multiple iterations to resolve large offsets, LC-RIO-ET achieves convergence online even for larger temporal offsets thanks to its continuous-time inertial model.
+            </p>
+          </div>
+
+          <br>
+          <h3 align="left" class="title is-4">Odometry Accuracy – EKF-RIO-TC Dataset (Unsynchronized)</h3>
+          <br>
+          <div class="content has-text-justified">
+            <p>
+              LC-RIO-ET achieves the best mean performance across all four metrics on the unsynchronized EKF-RIO-TC dataset,
+              with a mean translational RPE of 0.138 m and rotational RPE of 2.377°, representing improvements of <strong>18.3%</strong> and <strong>4.5%</strong> respectively over EKF-RIO-TC.
+              Relative to the plain FGO baseline LC-RIO, the translational RPE improves by <strong>33.0%</strong> and the translational APE by <strong>43.9%</strong>,
+              confirming that jointly estimating both calibration parameters is substantially more beneficial than either alone.
+            </p>
+          </div>
+
+          <!-- Results Table 1 (rendered as HTML) -->
+          <div style="overflow-x: auto; margin-bottom: 20px;">
+            <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth" style="font-size: 0.85em;">
+              <caption style="caption-side: top; font-weight: bold; margin-bottom: 8px;">Quantitative comparison on the EKF-RIO-TC dataset. Best results per sequence in bold.</caption>
+              <thead>
+                <tr>
+                  <th>Sequence</th>
+                  <th>Method</th>
+                  <th>APE Trans. (m)</th>
+                  <th>APE Rot. (°)</th>
+                  <th>RPE Trans. (m)</th>
+                  <th>RPE Rot. (°)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td rowspan="7">1</td><td>EKF-RIO</td><td>0.583</td><td>2.997</td><td>0.354</td><td>2.707</td></tr>
+                <tr><td>EKF-RIO-TC</td><td>0.333</td><td>1.907</td><td>0.175</td><td>2.412</td></tr>
+                <tr><td>RIO-T</td><td>0.435</td><td>2.102</td><td>0.183</td><td>2.618</td></tr>
+                <tr><td>LC-RIO</td><td>0.411</td><td>1.915</td><td>0.196</td><td>2.992</td></tr>
+                <tr><td>LC-RIO-E</td><td>0.586</td><td>1.794</td><td>0.224</td><td>3.081</td></tr>
+                <tr><td>LC-RIO-T</td><td>0.380</td><td>1.614</td><td>0.171</td><td>2.181</td></tr>
+                <tr><td><strong>LC-RIO-ET</strong></td><td><strong>0.324</strong></td><td><strong>1.570</strong></td><td><strong>0.161</strong></td><td><strong>2.131</strong></td></tr>
+
+                <tr><td rowspan="7">2</td><td>EKF-RIO</td><td>0.870</td><td>6.150</td><td>0.306</td><td>2.684</td></tr>
+                <tr><td>EKF-RIO-TC</td><td>0.372</td><td>2.323</td><td>0.153</td><td>2.582</td></tr>
+                <tr><td>RIO-T</td><td>0.412</td><td>2.046</td><td>0.175</td><td>2.238</td></tr>
+                <tr><td>LC-RIO</td><td>0.379</td><td>1.996</td><td>0.173</td><td><strong>1.890</strong></td></tr>
+                <tr><td>LC-RIO-E</td><td>0.376</td><td>2.078</td><td>0.171</td><td>1.997</td></tr>
+                <tr><td>LC-RIO-T</td><td>0.278</td><td><strong>1.967</strong></td><td>0.143</td><td>2.324</td></tr>
+                <tr><td><strong>LC-RIO-ET</strong></td><td><strong>0.219</strong></td><td>1.992</td><td><strong>0.140</strong></td><td>2.284</td></tr>
+
+                <tr><td rowspan="7">3</td><td>EKF-RIO</td><td>0.772</td><td>3.619</td><td>0.314</td><td>2.299</td></tr>
+                <tr><td>EKF-RIO-TC</td><td>0.216</td><td>2.291</td><td>0.131</td><td>1.876</td></tr>
+                <tr><td>RIO-T</td><td>0.720</td><td>3.915</td><td>0.205</td><td>2.226</td></tr>
+                <tr><td>LC-RIO</td><td>0.657</td><td>3.769</td><td>0.199</td><td>2.033</td></tr>
+                <tr><td>LC-RIO-E</td><td>0.719</td><td>4.885</td><td>0.209</td><td>2.037</td></tr>
+                <tr><td>LC-RIO-T</td><td><strong>0.206</strong></td><td>2.003</td><td>0.131</td><td>1.977</td></tr>
+                <tr><td><strong>LC-RIO-ET</strong></td><td>0.219</td><td><strong>1.985</strong></td><td><strong>0.127</strong></td><td><strong>1.861</strong></td></tr>
+
+                <tr><td rowspan="7">4</td><td>EKF-RIO</td><td>0.827</td><td>16.523</td><td>0.316</td><td>4.844</td></tr>
+                <tr><td>EKF-RIO-TC</td><td>0.264</td><td><strong>2.730</strong></td><td>0.167</td><td><strong>2.991</strong></td></tr>
+                <tr><td>RIO-T</td><td>0.268</td><td>3.764</td><td>0.221</td><td>3.214</td></tr>
+                <tr><td>LC-RIO</td><td><strong>0.247</strong></td><td>3.362</td><td>0.176</td><td>3.156</td></tr>
+                <tr><td>LC-RIO-E</td><td>0.329</td><td>3.281</td><td>0.138</td><td>3.279</td></tr>
+                <tr><td>LC-RIO-T</td><td>0.320</td><td>3.253</td><td>0.183</td><td>3.002</td></tr>
+                <tr><td><strong>LC-RIO-ET</strong></td><td>0.304</td><td>3.074</td><td><strong>0.116</strong></td><td>3.114</td></tr>
+
+                <tr><td rowspan="7">5</td><td>EKF-RIO</td><td>1.311</td><td>6.122</td><td>0.386</td><td>3.391</td></tr>
+                <tr><td>EKF-RIO-TC</td><td>0.570</td><td>2.601</td><td>0.221</td><td>2.591</td></tr>
+                <tr><td>RIO-T</td><td>0.614</td><td>2.958</td><td>0.264</td><td>3.337</td></tr>
+                <tr><td>LC-RIO</td><td>0.713</td><td>2.812</td><td>0.287</td><td>3.584</td></tr>
+                <tr><td>LC-RIO-E</td><td>0.378</td><td>1.948</td><td>0.174</td><td>3.061</td></tr>
+                <tr><td>LC-RIO-T</td><td>0.620</td><td>2.500</td><td>0.222</td><td>2.548</td></tr>
+                <tr><td><strong>LC-RIO-ET</strong></td><td><strong>0.284</strong></td><td><strong>1.693</strong></td><td><strong>0.146</strong></td><td><strong>2.494</strong></td></tr>
+
+                <tr style="background-color: #e8f4fd;"><td rowspan="7"><strong>Mean</strong></td><td>EKF-RIO</td><td>0.873</td><td>7.082</td><td>0.335</td><td>3.185</td></tr>
+                <tr style="background-color: #e8f4fd;"><td>EKF-RIO-TC</td><td>0.351</td><td>2.370</td><td>0.169</td><td>2.490</td></tr>
+                <tr style="background-color: #e8f4fd;"><td>RIO-T</td><td>0.490</td><td>2.957</td><td>0.210</td><td>2.726</td></tr>
+                <tr style="background-color: #e8f4fd;"><td>LC-RIO</td><td>0.481</td><td>2.771</td><td>0.206</td><td>2.731</td></tr>
+                <tr style="background-color: #e8f4fd;"><td>LC-RIO-E</td><td>0.477</td><td>2.797</td><td>0.183</td><td>2.691</td></tr>
+                <tr style="background-color: #e8f4fd;"><td>LC-RIO-T</td><td>0.361</td><td>2.267</td><td>0.170</td><td>2.406</td></tr>
+                <tr style="background-color: #d4edda;"><td><strong>LC-RIO-ET</strong></td><td><strong>0.270</strong></td><td><strong>2.123</strong></td><td><strong>0.138</strong></td><td><strong>2.377</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <br>
+          <h3 align="left" class="title is-4">Odometry Accuracy – ICINS Dataset (Hardware-Synchronized)</h3>
+          <br>
+          <div class="content has-text-justified">
+            <p>
+              On the hardware-synchronized ICINS dataset, LC-RIO-ET performs on par with LC-RIO, with nearly identical mean translational RPE (0.151 m vs. 0.150 m), confirming that the method does not degrade performance in synchronized settings.
+              Notably, LC-RIO-ET achieves the lowest mean rotational APE (4.864°), suggesting a residual benefit of the continuous-time inertial model even in synchronized conditions.
+              The estimated offset on this dataset converges to approximately −10 ms, consistent with the hardware trigger ensuring a small temporal offset.
+            </p>
+          </div>
+
+          <!-- Results Table 2 -->
+          <div style="overflow-x: auto; margin-bottom: 20px;">
+            <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth" style="font-size: 0.85em;">
+              <caption style="caption-side: top; font-weight: bold; margin-bottom: 8px;">Quantitative comparison on the ICINS dataset. Best results per sequence in bold.</caption>
+              <thead>
+                <tr>
+                  <th>Sequence</th>
+                  <th>Method</th>
+                  <th>APE Trans. (m)</th>
+                  <th>APE Rot. (°)</th>
+                  <th>RPE Trans. (m)</th>
+                  <th>RPE Rot. (°)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td rowspan="7">carried 1</td><td>EKF-RIO</td><td>0.995</td><td>5.553</td><td>0.134</td><td>0.857</td></tr>
+                <tr><td>EKF-RIO-TC</td><td>0.922</td><td>5.102</td><td>0.139</td><td>0.798</td></tr>
+                <tr><td>RIO-T</td><td>0.754</td><td>4.098</td><td><strong>0.126</strong></td><td><strong>0.641</strong></td></tr>
+                <tr><td><strong>LC-RIO</strong></td><td><strong>0.745</strong></td><td><strong>4.037</strong></td><td>0.128</td><td>0.655</td></tr>
+                <tr><td>LC-RIO-E</td><td>0.863</td><td>5.228</td><td>0.141</td><td>0.687</td></tr>
+                <tr><td>LC-RIO-T</td><td>0.763</td><td>4.053</td><td>0.128</td><td>0.665</td></tr>
+                <tr><td>LC-RIO-ET</td><td>0.768</td><td>4.038</td><td><strong>0.126</strong></td><td>0.666</td></tr>
+
+                <tr><td rowspan="7">carried 2</td><td>EKF-RIO</td><td>1.761</td><td>10.743</td><td>0.150</td><td>1.083</td></tr>
+                <tr><td>EKF-RIO-TC</td><td>1.594</td><td>9.613</td><td>0.152</td><td>0.992</td></tr>
+                <tr><td>RIO-T</td><td>1.519</td><td>9.258</td><td><strong>0.126</strong></td><td><strong>0.841</strong></td></tr>
+                <tr><td><strong>LC-RIO</strong></td><td><strong>1.513</strong></td><td>9.094</td><td><strong>0.126</strong></td><td>0.845</td></tr>
+                <tr><td>LC-RIO-E</td><td>2.091</td><td>12.385</td><td>0.182</td><td>0.886</td></tr>
+                <tr><td>LC-RIO-T</td><td>1.526</td><td>9.095</td><td>0.128</td><td>0.863</td></tr>
+                <tr><td><strong>LC-RIO-ET</strong></td><td>1.518</td><td><strong>9.071</strong></td><td>0.128</td><td>0.871</td></tr>
+
+                <tr><td rowspan="7">flight 1</td><td>EKF-RIO</td><td>0.736</td><td>4.944</td><td>0.213</td><td>1.401</td></tr>
+                <tr><td>EKF-RIO-TC</td><td>0.764</td><td>5.274</td><td>0.219</td><td>1.493</td></tr>
+                <tr><td>RIO-T</td><td>0.699</td><td>4.725</td><td>0.189</td><td>1.428</td></tr>
+                <tr><td>LC-RIO</td><td>0.699</td><td>4.783</td><td>0.191</td><td>1.424</td></tr>
+                <tr><td>LC-RIO-E</td><td>0.698</td><td>4.713</td><td><strong>0.180</strong></td><td>1.424</td></tr>
+                <tr><td><strong>LC-RIO-T</strong></td><td><strong>0.695</strong></td><td>4.727</td><td>0.189</td><td>1.419</td></tr>
+                <tr><td>LC-RIO-ET</td><td>0.698</td><td><strong>4.685</strong></td><td>0.190</td><td>1.423</td></tr>
+
+                <tr><td rowspan="7">flight 2</td><td>EKF-RIO</td><td>0.100</td><td>1.938</td><td>0.176</td><td>0.888</td></tr>
+                <tr><td>EKF-RIO-TC</td><td>0.098</td><td>1.815</td><td>0.161</td><td>0.914</td></tr>
+                <tr><td>RIO-T</td><td>0.098</td><td>1.727</td><td><strong>0.153</strong></td><td>0.817</td></tr>
+                <tr><td>LC-RIO</td><td>0.101</td><td>1.759</td><td>0.157</td><td>0.836</td></tr>
+                <tr><td>LC-RIO-E</td><td>0.102</td><td>1.725</td><td>0.160</td><td>0.796</td></tr>
+                <tr><td>LC-RIO-T</td><td>0.099</td><td>1.720</td><td>0.155</td><td><strong>0.792</strong></td></tr>
+                <tr><td><strong>LC-RIO-ET</strong></td><td><strong>0.096</strong></td><td><strong>1.663</strong></td><td>0.160</td><td>0.805</td></tr>
+
+                <tr style="background-color: #e8f4fd;"><td rowspan="7"><strong>Mean</strong></td><td>EKF-RIO</td><td>0.898</td><td>5.795</td><td>0.168</td><td>1.057</td></tr>
+                <tr style="background-color: #e8f4fd;"><td>EKF-RIO-TC</td><td>0.845</td><td>5.451</td><td>0.168</td><td>1.049</td></tr>
+                <tr style="background-color: #e8f4fd;"><td>RIO-T</td><td>0.768</td><td>4.952</td><td><strong>0.148</strong></td><td><strong>0.932</strong></td></tr>
+                <tr style="background-color: #e8f4fd;"><td><strong>LC-RIO</strong></td><td><strong>0.764</strong></td><td>4.918</td><td>0.150</td><td>0.940</td></tr>
+                <tr style="background-color: #e8f4fd;"><td>LC-RIO-E</td><td>0.938</td><td>6.013</td><td>0.166</td><td>0.948</td></tr>
+                <tr style="background-color: #e8f4fd;"><td>LC-RIO-T</td><td>0.771</td><td>4.899</td><td>0.150</td><td>0.935</td></tr>
+                <tr style="background-color: #d4edda;"><td><strong>LC-RIO-ET</strong></td><td>0.770</td><td><strong>4.864</strong></td><td>0.151</td><td>0.941</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <br>
+          <h3 align="left" class="title is-4">Impact of Online Spatio-Temporal Calibration</h3>
+          <br>
+          <div class="columns is-centered">
+            <div class="column is-two-thirds">
+              <img src="static/images/viz.png" style="width: 100%; height: auto;" class="center"/>
+              <p style="text-align: center; margin-top: 8px; font-style: italic;">Trajectory visualization of EKF-RIO with original (blue) and LC-RIO-ET estimated (green) parameters on Sequence 5 from the EKF-RIO-TC dataset.</p>
+            </div>
+          </div>
+          <br>
+          <div class="content has-text-justified">
+            <p>
+              To isolate the value of calibrated parameters, EKF-RIO and LC-RIO were re-initialized with extrinsic and temporal offset parameters estimated by LC-RIO-ET (denoted *), and re-run with these fixed calibration values.
+              On Sequence 5 (unsynchronized, high dynamics), calibrated parameters reduce translational RPE of EKF-RIO by <strong>68.4%</strong> and of LC-RIO by <strong>51.2%</strong>.
+              On the <em>flight 2</em> sequence, improvements are smaller but still consistent, reducing translational RPE by <strong>6.3%</strong> for EKF-RIO* and <strong>1.9%</strong> for LC-RIO* while also improving rotational metrics.
+            
+            </p>
+          </div>
+
+          <!-- Impact Table -->
+          <div style="overflow-x: auto; margin-bottom: 20px;">
+            <table class="table is-bordered is-striped is-narrow is-hoverable" style="font-size: 0.85em; margin: 0 auto;">
+              <caption style="caption-side: top; font-weight: bold; margin-bottom: 8px;">Impact of online spatio-temporal calibration: EKF-RIO and LC-RIO re-initialized with parameters estimated by LC-RIO-ET (denoted *).</caption>
+              <thead>
+                <tr>
+                  <th>Sequence</th>
+                  <th>Method</th>
+                  <th>APE Trans. (m)</th>
+                  <th>APE Rot. (°)</th>
+                  <th>RPE Trans. (m)</th>
+                  <th>RPE Rot. (°)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td rowspan="4">5</td><td>EKF-RIO</td><td>1.311</td><td>6.122</td><td>0.386</td><td>3.391</td></tr>
+                <tr><td><strong>EKF-RIO*</strong></td><td><strong>0.255</strong></td><td><strong>1.643</strong></td><td><strong>0.122</strong></td><td><strong>2.409</strong></td></tr>
+                <tr><td>LC-RIO</td><td>0.713</td><td>2.812</td><td>0.287</td><td>3.584</td></tr>
+                <tr><td><strong>LC-RIO*</strong></td><td><strong>0.293</strong></td><td><strong>1.607</strong></td><td><strong>0.140</strong></td><td><strong>2.276</strong></td></tr>
+
+                <tr><td rowspan="4">flight 2</td><td>EKF-RIO</td><td><strong>0.100</strong></td><td>1.938</td><td>0.176</td><td>0.888</td></tr>
+                <tr><td>EKF-RIO*</td><td>0.112</td><td><strong>1.783</strong></td><td><strong>0.165</strong></td><td><strong>0.867</strong></td></tr>
+                <tr><td>LC-RIO</td><td><strong>0.101</strong></td><td>1.759</td><td>0.157</td><td>0.836</td></tr>
+                <tr><td>LC-RIO*</td><td>0.102</td><td><strong>1.714</strong></td><td><strong>0.154</strong></td><td><strong>0.835</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p>
+              This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+              This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
